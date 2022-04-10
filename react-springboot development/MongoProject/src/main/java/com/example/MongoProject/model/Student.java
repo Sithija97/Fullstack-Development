@@ -17,6 +17,7 @@ public class Student {
 
     public Student(String name, double age, int grade) {
         super();
+        this.id = id;
         this.name = name;
         this.age = age;
         this.grade = grade;
