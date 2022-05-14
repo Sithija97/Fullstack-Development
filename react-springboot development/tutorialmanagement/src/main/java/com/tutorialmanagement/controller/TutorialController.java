@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -46,4 +47,53 @@ public class TutorialController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // GET TUTORIAL
+    @GetMapping("/tutorials/{id}")
+    public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") String id) {
+        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+        if (tutorialData.isPresent()) {
+            return new ResponseEntity<>(tutorialData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // UPDATE TUTORIAL
+    @PutMapping("/tutorials/{id}")
+    public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") String id, @RequestBody Tutorial tutorial) {
+        Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
+        if (tutorialData.isPresent()) {
+            Tutorial _tutorial = tutorialData.get();
+            _tutorial.setTitle(tutorial.getTitle());
+            _tutorial.setDescription(tutorial.getDescription());
+            _tutorial.setPublished(tutorial.isPublished());
+            return new ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // DELETE TUTORIAL
+    @DeleteMapping("/tutorials/{id}")
+    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") String id) {
+        try {
+            tutorialRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // DELETE ALL TUTORIALS
+    @DeleteMapping("/tutorials")
+    public ResponseEntity<HttpStatus> deleteAllTutorials() {
+        try {
+            tutorialRepository.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
