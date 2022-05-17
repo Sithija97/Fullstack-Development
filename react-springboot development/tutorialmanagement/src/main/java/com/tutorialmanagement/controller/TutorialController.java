@@ -85,7 +85,7 @@ public class TutorialController {
         }
     }
 
-    // DELETE ALL TUTORIALS
+    // DELETE ALL TUTORIAL
     @DeleteMapping("/tutorials")
     public ResponseEntity<HttpStatus> deleteAllTutorials() {
         try {
