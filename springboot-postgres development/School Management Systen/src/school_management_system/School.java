@@ -44,7 +44,11 @@ public class School {
         return totalMoneySpent;
     }
 
-    public void setTotalMoneySpent(int moneySpent) {
-        this.totalMoneySpent -= moneySpent;
+    public static void setTotalMoneySpent(int moneySpent) {
+        totalMoneySpent += moneySpent;
+    }
+
+    public int getTotalMoneyRemaining() {
+        return totalMoneyEarned - totalMoneySpent;
     }
 }

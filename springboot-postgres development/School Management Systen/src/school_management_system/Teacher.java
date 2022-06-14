@@ -7,11 +7,14 @@ public class Teacher {
     private String subject;
     private int salary;
 
+    private int salaryReceived;
+
     public Teacher(int id, String name, String subject, int salary) {
         this.id = id;
         this.name = name;
         this.subject = subject;
         this.salary = salary;
+        this.salaryReceived = 0;
     }
 
     public int getId() {
@@ -36,5 +39,14 @@ public class Teacher {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public void setSalaryReceived(int salary){
+        this.salaryReceived += salary;
+        School.setTotalMoneySpent(salary);
+    }
+
+    public int getRemainingSalary() {
+        return this.salary - this.salaryReceived;
     }
 }

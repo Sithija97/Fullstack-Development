@@ -27,10 +27,16 @@ public class Main {
         teachers.add(Mrs_Chandrani);
 
         School vmv = new School(teachers, students);
+
         sithija.setFeesPaid(2000);
         ruchira.setFeesPaid(1000);
         isuru.setFeesPaid(2000);
         malith.setFeesPaid(1500);
-        System.out.println("total money earned by school :"+vmv.getTotalMoneyEarned());
+
+        Mr_Indika.setSalaryReceived(Mr_Indika.getSalary());
+        System.out.println(Mr_Indika.getRemainingSalary());
+        System.out.println(Mr_Indika.getSalary());
+
+        System.out.println("getTotalMoneyRemaining :"+vmv.getTotalMoneyRemaining());
     }
 }
