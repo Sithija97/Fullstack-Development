@@ -38,6 +38,7 @@ public class Student {
 
     public void setFeesPaid(int feesPaid) {
         this.feesPaid = feesPaid;
+        School.setTotalMoneyEarned(feesPaid);
     }
 
     public int getFeesTotal() {
@@ -46,5 +47,9 @@ public class Student {
 
     public void setFeesTotal(int feesTotal) {
         this.feesTotal = feesTotal;
+    }
+
+    public int getRemainingFees() {
+        return this.feesTotal - this.feesPaid;
     }
 }
