@@ -5,9 +5,11 @@ const NavbarComponent = () => {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/tutorials" className="navbar-brand">
-          Sithija
-        </a>
+        <li className="nav-item">
+          <a href="/tutorials" className="navbar-brand">
+            Sithija
+          </a>
+        </li>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/tutorials"} className="nav-link">

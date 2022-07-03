@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route } from "react-router-dom";
-import { Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AddTutorial from "./components/add-tutorial";
 import NavbarComponent from "./components/navbar.component";
@@ -12,11 +11,12 @@ function App() {
     <div>
       <NavbarComponent />
       <div className="container mt-3">
-        <Switch>
-          <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
-          <Route exact path="/add" component={AddTutorial} />
-          <Route path="/tutorials/:id" component={Tutorial} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<TutorialsList />} />
+          <Route path="/tutorials" element={<TutorialsList />} />
+          <Route path="/add" element={<AddTutorial />} />
+          <Route path="/tutorials/:id" element={<Tutorial />} />
+        </Routes>
       </div>
     </div>
   );
