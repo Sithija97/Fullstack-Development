@@ -111,25 +111,28 @@ const Tutorial = (props) => {
           </form>
           {currentTutorial.published ? (
             <button
-              className="badge badge-primary mr-2"
+              className="badge badge-primary mr-2 bg bg-success"
               onClick={() => updatePublished(false)}
             >
               UnPublish
             </button>
           ) : (
             <button
-              className="badge badge-primary mr-2"
+              className="badge badge-primary mr-2 bg bg-success"
               onClick={() => updatePublished(true)}
             >
               Publish
             </button>
           )}
-          <button className="badge badge-danger mr-2" onClick={deleteTutorial}>
+          <button
+            className="badge badge-danger mr-2 bg bg-danger"
+            onClick={deleteTutorial}
+          >
             Delete
           </button>
           <button
             type="submit"
-            className="badge badge-success"
+            className="badge badge-success bg bg-warning"
             onClick={updateTutorial}
           >
             Update
