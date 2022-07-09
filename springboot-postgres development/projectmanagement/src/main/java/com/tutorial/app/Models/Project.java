@@ -1,6 +1,9 @@
 package com.tutorial.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "projects")
@@ -14,7 +17,8 @@ public class Project {
     */
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_id")
     private long id;
 
     @Column(name = "name")
@@ -25,6 +29,11 @@ public class Project {
 
     @Column(name = "tech_stack")
     private String techStack;
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "ticket_id")
+    private Set<Ticket> tickets;
 
     public Project() {
     }
@@ -61,5 +70,13 @@ public class Project {
 
     public void setTechStack(String techStack) {
         this.techStack = techStack;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

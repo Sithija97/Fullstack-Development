@@ -1,5 +1,7 @@
 package com.tutorial.app.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +16,8 @@ public class Ticket {
     */
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ticket_id")
     private long id;
 
     @Column(name = "name")
@@ -26,8 +29,19 @@ public class Ticket {
     @Column(name="type")
     private String type;
 
-    @Column(name="project_id")
-    private long projectId;
+
+    @ManyToOne()
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    public Ticket() {
+    }
+    public Ticket(String name, String description, String type,  Project project) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.project = project;
+    }
 
     public long getId() {
         return id;
@@ -49,19 +63,19 @@ public class Ticket {
         this.description = description;
     }
 
-    public long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

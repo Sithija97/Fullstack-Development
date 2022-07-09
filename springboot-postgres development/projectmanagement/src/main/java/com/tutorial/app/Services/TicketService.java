@@ -1,19 +1,26 @@
 package com.tutorial.app.Services;
 
+import com.tutorial.app.Dto.TicketReqDto;
 import com.tutorial.app.Models.Project;
 import com.tutorial.app.Models.Ticket;
+import com.tutorial.app.Repositories.ProjectRepository;
 import com.tutorial.app.Repositories.TicketRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class TicketService {
 
     @Autowired
     TicketRepository ticketRepository;
+    @Autowired
+    ProjectRepository projectRepository;
     public List<Ticket> getAllTickets() {
         List<Ticket> tickets = new ArrayList<Ticket>(ticketRepository.findAll());
         return tickets;
@@ -24,8 +31,16 @@ public class TicketService {
         return ticket;
     }
 
-    public Ticket addTicket(Ticket ticket) {
+    public Ticket addTicket(@NotNull TicketReqDto ticketReqDto) {
+        Project project = projectRepository.findById(ticketReqDto.getProjectId()).get();
+        System.out.println("project :"+project.getName());
+        Ticket ticket = new Ticket();
+        ticket.setName(ticketReqDto.getName());
+        ticket.setDescription(ticketReqDto.getDescription());
+        ticket.setType(ticketReqDto.getType());
+        ticket.setProject(project);
         return ticketRepository.save(ticket);
+
     }
 
     public Ticket updateTicket(long ticketId, Ticket _ticket) {
@@ -35,7 +50,6 @@ public class TicketService {
             ticketData.setName(_ticket.getName());
             ticketData.setDescription(_ticket.getDescription());
             ticketData.setType(_ticket.getType());
-            ticketData.setProjectId(_ticket.getProjectId());
         }
         return _ticket;
     }
@@ -50,10 +64,4 @@ public class TicketService {
         }
     }
 
-    public List<Ticket> getTicketsByProject(long projectId) {
-        List<Ticket> filteredTickets = ticketRepository.findAll().stream()
-                .filter(ticket -> ticket.getProjectId() == projectId)
-                .collect(Collectors.toList());
-        return filteredTickets;
-    }
 }

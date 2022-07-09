@@ -1,5 +1,6 @@
 package com.tutorial.app.Controllers;
 
+import com.tutorial.app.Dto.TicketReqDto;
 import com.tutorial.app.Models.Ticket;
 import com.tutorial.app.Services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class TicketController {
 
-    @Autowired
+    @Autowired()
     TicketService ticketService;
 
     @GetMapping("/tickets")
@@ -25,14 +27,9 @@ public class TicketController {
         return ticketService.getTicketById(ticketId);
     }
 
-    @GetMapping("/tickets/{projectId}")
-    private List<Ticket> getTicketsByProject(@PathVariable("projectId") long projectId){
-        return ticketService.getTicketsByProject(projectId);
-    }
-
     @PostMapping("/tickets")
-    private Ticket addTicket(@RequestBody Ticket ticket) {
-        return ticketService.addTicket(ticket);
+    private Ticket addTicket(@RequestBody TicketReqDto ticketReqDto) {
+        return ticketService.addTicket(ticketReqDto);
     }
 
     @PutMapping("/update/tickets/{ticketId}")
@@ -40,7 +37,7 @@ public class TicketController {
         return ticketService.updateTicket(ticketId,_ticket);
     }
 
-    @DeleteMapping("/delete/{ticketId}")
+    @DeleteMapping("/delete/ticket/{ticketId}")
     private String deleteTicket(@PathVariable("ticketId") long ticketId){
         return ticketService.deleteTicket(ticketId);
     }
