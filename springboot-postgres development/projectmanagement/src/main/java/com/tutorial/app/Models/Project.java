@@ -31,8 +31,7 @@ public class Project {
     private String techStack;
 
     @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "ticket_id")
+    @OneToMany(mappedBy = "project")
     private Set<Ticket> tickets;
 
     public Project() {
