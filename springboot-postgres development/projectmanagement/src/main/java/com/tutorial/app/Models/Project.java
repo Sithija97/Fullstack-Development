@@ -3,6 +3,7 @@ package com.tutorial.app.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,7 +33,7 @@ public class Project {
 
     @JsonIgnore
     @OneToMany(mappedBy = "project")
-    private Set<Ticket> tickets;
+    private List<Ticket> tickets;
 
     public Project() {
     }
@@ -71,11 +72,11 @@ public class Project {
         this.techStack = techStack;
     }
 
-    public Set<Ticket> getTickets() {
+    public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<Ticket> tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
 }

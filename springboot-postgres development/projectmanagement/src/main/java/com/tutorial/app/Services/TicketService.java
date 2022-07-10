@@ -43,15 +43,18 @@ public class TicketService {
 
     }
 
-    public Ticket updateTicket(long ticketId, Ticket _ticket) {
+    public Ticket updateTicket(long ticketId, TicketReqDto ticketReqDto) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
-        if(ticket.isPresent()){
-            Ticket ticketData = ticket.get();
-            ticketData.setName(_ticket.getName());
-            ticketData.setDescription(_ticket.getDescription());
-            ticketData.setType(_ticket.getType());
+        Project project = projectRepository.findById(ticketReqDto.getProjectId()).get();
+        Ticket ticketData = new Ticket();
+        if (ticket.isPresent()) {
+            ticketData = ticket.get();
+            ticketData.setName(ticketReqDto.getName());
+            ticketData.setDescription(ticketReqDto.getDescription());
+            ticketData.setType(ticketReqDto.getType());
+            ticketData.setProject(project);
         }
-        return _ticket;
+        return ticketRepository.save(ticketData);
     }
 
     public String deleteTicket(long ticketId) {
@@ -64,4 +67,8 @@ public class TicketService {
         }
     }
 
+    public String deleteAllTickets() {
+        ticketRepository.deleteAll();
+        return "All tickets deleted !";
+    }
 }

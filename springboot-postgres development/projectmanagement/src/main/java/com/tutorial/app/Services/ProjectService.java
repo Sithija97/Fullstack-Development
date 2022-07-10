@@ -1,6 +1,7 @@
 package com.tutorial.app.Services;
 
 import com.tutorial.app.Models.Project;
+import com.tutorial.app.Models.Ticket;
 import com.tutorial.app.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,12 @@ public class ProjectService {
     }
 
     public Project getProjectById(long projectId) {
-        Project project = projectRepository.getById(projectId);
-        return project;
+        Optional<Project> project = projectRepository.findById(projectId);
+        if(project.isPresent()) {
+            return project.get();
+        } else {
+            return null;
+        }
     }
 
     public Project addProject(Project project) {
@@ -49,5 +54,24 @@ public class ProjectService {
         } else {
             return "Project not found with the given ID";
         }
+    }
+
+    public String deleteAllProjects() {
+        projectRepository.deleteAll();
+        return "All projects deleted !";
+    }
+
+    public List<Ticket> getAllTicketsByProject(long projectId) {
+        Optional<Project> project = projectRepository.findById(projectId);
+        if(project.isPresent()) {
+            Project selectedProject = project.get();
+            List<Ticket> filteredTickets = selectedProject.getTickets();
+            if(filteredTickets.size() > 0 && !filteredTickets.isEmpty()) {
+                return filteredTickets;
+            }
+        } else {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>();
     }
 }

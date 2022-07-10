@@ -1,6 +1,7 @@
 package com.tutorial.app.Controllers;
 
 import com.tutorial.app.Models.Project;
+import com.tutorial.app.Models.Ticket;
 import com.tutorial.app.Services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,11 @@ public class ProjectController {
     @GetMapping("/projects/{projectId}")
     private Project getProjectById(@PathVariable("projectId") long projectId) {return projectService.getProjectById(projectId);}
 
+    @GetMapping("/projects/{projectId}/tickets")
+    private List<Ticket> getAllTicketsByProject(@PathVariable("projectId") long projectId) {
+        return projectService.getAllTicketsByProject(projectId);
+    }
+
     @PostMapping("/projects")
     private Project addProject(@RequestBody Project project) {
         return projectService.addProject(project);
@@ -36,5 +42,10 @@ public class ProjectController {
     @DeleteMapping("/delete/project/{projectId}")
     private String deleteProject(@PathVariable("projectId") long projectId) {
         return projectService.deleteProject(projectId);
+    }
+
+    @DeleteMapping("/delete/all/projects")
+    private String deleteALLProjects() {
+        return projectService.deleteAllProjects();
     }
 }

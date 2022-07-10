@@ -33,13 +33,18 @@ public class TicketController {
     }
 
     @PutMapping("/update/tickets/{ticketId}")
-    private Ticket updateTicket(@PathVariable("ticketId") long ticketId, @RequestBody Ticket _ticket) {
-        return ticketService.updateTicket(ticketId,_ticket);
+    private Ticket updateTicket(@PathVariable("ticketId") long ticketId, @RequestBody TicketReqDto ticketReqDto) {
+        return ticketService.updateTicket(ticketId,ticketReqDto);
     }
 
     @DeleteMapping("/delete/ticket/{ticketId}")
     private String deleteTicket(@PathVariable("ticketId") long ticketId){
         return ticketService.deleteTicket(ticketId);
+    }
+
+    @DeleteMapping("/delete/all/tickets")
+    private String deleteAllTickets() {
+        return ticketService.deleteAllTickets();
     }
 
 }
