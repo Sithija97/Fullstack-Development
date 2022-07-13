@@ -14,7 +14,7 @@ const Project = () => {
 
   useEffect(() => {
     loadProject();
-  }, []);
+  });
 
   return (
     <div>
