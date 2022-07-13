@@ -1,5 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react";
 
 const Navbar = () => {
   return (
