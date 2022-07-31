@@ -20,6 +20,12 @@ const EmployeeList = () => {
         setLoading(false)
     }
 
+    const deleteEmployee = (id)=>{
+        console.log('id :',id);
+        setEmployees(employees.filter(employee => employee.id !==id))
+        EmployeeService.deleteEmployee(id)
+    }
+
     useEffect(() => {
         fetchData();
     }, [])
@@ -41,7 +47,7 @@ const EmployeeList = () => {
                     </thead>
                     {!loading && employees.map((employee) =>(
                     <tbody className='bg-white' key={employee.id}>
-                        <Employee employee={employee}/>
+                        <Employee employee={employee} deleteEmployee={deleteEmployee}/>
                     </tbody>
                     ))}
                 </table>

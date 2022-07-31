@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -29,5 +30,36 @@ public class EmployeeServiceImpl implements EmployeeService{
         employeeRepository.save(employee);
         return employee;
     }
+
+    @Override
+    public void deleteEmployee(long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(employee.isPresent()) {
+            employeeRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public Employee getEmpleeById(long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(employee.isPresent()){
+            return employee.get();
+        }
+        return null;
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee, Long id) {
+        Optional<Employee> employee_ = employeeRepository.findById(id);
+        if(employee_.isPresent()){
+            Employee updatedEmployee = employee_.get();
+            updatedEmployee.setFirstName(employee.getFirstName());
+            updatedEmployee.setSecondName(employee.getSecondName());
+            updatedEmployee.setEmail(employee.getEmail());
+            return employeeRepository.save(updatedEmployee);
+        }
+        return employee;
+    }
+
 
 }

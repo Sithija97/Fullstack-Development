@@ -20,6 +20,11 @@ const AddEmployee = () => {
 
     }
 
+    const goBack =(e) => {
+        e.preventDefault();
+        navigate('/employeeList');
+    }
+
     const handleChange = (e) => {
         const value = e.target.value;
         const name = e.target.name;
@@ -56,6 +61,7 @@ const AddEmployee = () => {
                 <div className="items-center justify-center h-14 w-full my-4 space-x-4 pt-4">
                     <button className="rounded text-white font-semibold bg-green-400 hover:bg-green-700 py-2 px-6" onClick={handleSave}>Save</button>
                     <button className="rounded text-white font-semibold bg-red-400 hover:bg-red-700 py-2 px-6" onClick={handleClear}>Clear</button>
+                    <button className="rounded text-white font-semibold bg-blue-400 hover:bg-blue-700 py-2 px-6" onClick={goBack}>Home</button>
                 </div>
             </div>
         </div>
