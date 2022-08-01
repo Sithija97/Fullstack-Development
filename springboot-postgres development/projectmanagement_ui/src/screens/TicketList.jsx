@@ -1,55 +1,52 @@
 import React, { useEffect, useState } from "react";
+import Ticket from './ticket'
 import TicketService from "../services/TicketService";
-
-import Container from "@mui/material/Container";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const loadAllTickets = () => {
-    TicketService.getAll()
-      .then((data) => setTickets(data))
-      .catch((e) => console.log("Error: ", e));
+    setLoading(true)
+    try {
+      TicketService.getAll()
+        .then((data) => setTickets(data))
+        .catch((e) => console.log("Error: ", e));
+    } catch (error) {
+      console.log('error :', error);
+    }
+    setLoading(false)
   };
 
   useEffect(() => {
     loadAllTickets();
   }, []);
   return (
-    <Container>
-      <h3>Tickets</h3>
-      <Container maxWidth="sm">
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Project</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tickets &&
-                tickets.map((ticket, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{ticket.name}</TableCell>
-                    <TableCell>{ticket.description}</TableCell>
-                    <TableCell>{ticket.type}</TableCell>
-                    <TableCell>{ticket.project.name}</TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-    </Container>
+    <div className='container mx-auto my-8'>
+      <div className="h-12">
+        <button className="rounded bg-blue-500 text-white px-6 py-2 font-semibold">Add Ticket</button>
+      </div>
+      <div className="flex shadow border-b">
+        <table className="min-w-full">
+          <thead className='bg-gray-50'>
+            <tr>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Name</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Description</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Type</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Project</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Actions</th>
+            </tr>
+          </thead>
+          {
+            !loading ? tickets.map((ticket) => (
+              <tbody className='bg-white' key={ticket.id}>
+                <Ticket ticket={ticket} />
+              </tbody>
+            )) : <p>loading</p>
+          }
+        </table>
+      </div>
+    </div>
   );
 };
 

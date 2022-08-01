@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import ProjectService from "../services/ProjectService";
-
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
-import { Button } from "@mui/material";
+import Project from "./project";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadAllProjects = () => {
-    ProjectService.getAll()
-      .then((data) => setProjects(data))
-      .catch((e) => console.log("Error: ", e));
+    setLoading(true)
+    try {
+      ProjectService.getAll()
+        .then((data) => setProjects(data))
+        .catch((e) => console.log("Error: ", e));
+    } catch (error) {
+      console.log('error :', error);
+    }
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -28,42 +24,30 @@ const ProjectList = () => {
   }, []);
 
   return (
-    <Container>
-      <div>
-        <h3>Projects</h3>
-        <Button variant="contained" size="small">
-          Create
-        </Button>
+    <div className='container mx-auto my-8'>
+      <div className="h-12">
+        <button className="rounded bg-blue-500 text-white px-6 py-2 font-semibold">Add Project</button>
       </div>
-      <Container maxWidth="sm">
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Technologies</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {projects &&
-                projects.map((project, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{project.name}</TableCell>
-                    <TableCell>{project.description}</TableCell>
-                    <TableCell>{project.techStack}</TableCell>
-                    <TableCell>
-                      <Link to={`/projects/${project.id}`}>
-                        <Chip label="details"></Chip>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-    </Container>
+      <div className="flex shadow border-b">
+        <table className="min-w-full">
+          <thead className='bg-gray-50'>
+            <tr>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Name</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Description</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Tech Stack</th>
+              <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>Actions</th>
+            </tr>
+          </thead>
+          {
+            !loading ? projects.map((project) => (
+              <tbody className='bg-white' key={project.id}>
+                <Project project={project} />
+              </tbody>
+            )) : <p>loading</p>
+          }
+        </table>
+      </div>
+    </div>
   );
 };
 

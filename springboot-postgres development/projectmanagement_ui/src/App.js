@@ -1,21 +1,23 @@
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import Project from "./screens/Project";
-import ProjectList from "./screens/ProjectList";
-import TicketList from "./screens/TicketList";
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Header from './components/header';
+import ProjectList from './screens/projectList';
+import TicketList from './screens/ticketList';
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<ProjectList />} />
-        <Route path="/projects" element={<ProjectList />} />
-        <Route path="/projects/:id" element={<Project />} />
-        <Route path="/tickets" element={<TicketList />} />
-      </Routes>
-    </div>
+    <>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route index element={<ProjectList />} />
+          <Route path='/' element={<ProjectList />}></Route>
+          <Route path='/projectList' element={<ProjectList />}></Route>
+          <Route path='/ticketList' element={<TicketList />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
