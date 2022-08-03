@@ -25,6 +25,10 @@ const ProjectList = () => {
     loadAllProjects();
   }, []);
 
+  const testMethod = (project) => {
+    console.log("project :", project);
+  };
+
   return (
     <div className="container mx-auto my-8">
       <div className="px-10">
@@ -66,7 +70,7 @@ const ProjectList = () => {
           </table>
         </div>
       </div>
-      <AddModal open={open} setOpen={setOpen} />
+      <AddModal open={open} setOpen={setOpen} testMethod={testMethod} />
     </div>
   );
 };
