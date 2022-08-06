@@ -7,7 +7,7 @@ const Project = ({ project }) => {
   // const [project, setProject] = useState({});
 
   // const loadProject = () => {
-  //   ProjectService.getById(id)
+  //   ProjectService.getProjectById(id)
   //     .then((data) => setProject(data))
   //     .catch((e) => console.log("Error: ", e));
   // };

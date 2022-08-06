@@ -9,7 +9,7 @@ const TicketList = () => {
   const loadAllTickets = () => {
     setLoading(true);
     try {
-      TicketService.getAll()
+      TicketService.getAllTickets()
         .then((data) => setTickets(data))
         .catch((e) => console.log("Error: ", e));
     } catch (error) {
@@ -50,14 +50,12 @@ const TicketList = () => {
                 </th>
               </tr>
             </thead>
-            {!loading ? (
+            {!loading && (
               tickets.map((ticket) => (
                 <tbody className="bg-white" key={ticket.id}>
                   <Ticket ticket={ticket} />
                 </tbody>
               ))
-            ) : (
-              <p>loading</p>
             )}
           </table>
         </div>

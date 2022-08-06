@@ -1,8 +1,9 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
+import ProjectService from "../services/ProjectService";
 
-export default function AddModal({ open, setOpen, testMethod }) {
+export default function AddModal({ open, setOpen }) {
   const initialState = {
     name: "",
     description: "",
@@ -18,9 +19,12 @@ export default function AddModal({ open, setOpen, testMethod }) {
     setProject({ ...project, [name]: value });
   };
 
-  const handleAddProject = (e) => {
-    e.preventDefault();
-    testMethod(project);
+  const handleAddProject = () => {
+    // e.preventDefault();
+    console.log('project :',project);
+    ProjectService.addProject(project);
+    setProject(initialState);
+    setOpen(false);
   };
 
   return (
@@ -79,38 +83,16 @@ export default function AddModal({ open, setOpen, testMethod }) {
                   </div>
                 </div>
                 <div className="px-10">
-                  <input
-                    type="text"
-                    name="name"
-                    value={project.name}
-                    onChange={handleChange}
-                    placeholder="project name"
-                    class="block p-2 w-full mb-4 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></input>
-                  <input
-                    type="text"
-                    name="description"
-                    value={project.description}
-                    onChange={handleChange}
-                    placeholder="description"
-                    class="block p-2 w-full mb-4 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></input>
-                  <input
-                    type="text"
-                    name="techStack"
-                    value={project.techStack}
-                    onChange={handleChange}
-                    placeholder="technology stack"
-                    class="block p-2 w-full mb-4 text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  ></input>
+                  <input type="text" placeholder="name" name="name" value={project.name} onChange={handleChange}/>
+                  <input type="text" placeholder="description" name="description" value={project.description} onChange={handleChange}/>
+                  <input type="text" placeholder="technologies" name="techStack" value={project.techStack} onChange={handleChange}/>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={(e) => {
+                    onClick={() => {
                       handleAddProject();
-                      setOpen(false);
                     }}
                   >
                     Add

@@ -12,7 +12,7 @@ const ProjectList = () => {
   const loadAllProjects = () => {
     setLoading(true);
     try {
-      ProjectService.getAll()
+      ProjectService.getAllProjects()
         .then((data) => setProjects(data))
         .catch((e) => console.log("Error: ", e));
     } catch (error) {
@@ -23,11 +23,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     loadAllProjects();
-  }, []);
-
-  const testMethod = (project) => {
-    console.log("project :", project);
-  };
+  }, [projects]);
 
   return (
     <div className="container mx-auto my-8">
@@ -58,19 +54,17 @@ const ProjectList = () => {
                 </th>
               </tr>
             </thead>
-            {!loading ? (
+            {!loading && (
               projects.map((project) => (
                 <tbody className="bg-white" key={project.id}>
                   <Project project={project} />
                 </tbody>
               ))
-            ) : (
-              <p>loading</p>
             )}
           </table>
         </div>
       </div>
-      <AddModal open={open} setOpen={setOpen} testMethod={testMethod} />
+      <AddModal open={open} setOpen={setOpen} />
     </div>
   );
 };
