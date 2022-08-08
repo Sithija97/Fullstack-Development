@@ -1,12 +1,12 @@
-package com.employee;
+package com.section_1;
 
 public class Employee {
     String name;
-    Integer age;
-    static Double salary;
+    int age;
+    static double salary;
     String location;
 
-    public Employee(String name, Integer age, Double salary, String location) {
+    public Employee(String name, int age, double salary, String location) {
         this.name = name;
         this.age = age;
         this.salary = salary;

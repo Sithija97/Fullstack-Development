@@ -1,4 +1,4 @@
-package com.company;
+package com.intro;
 
 public enum TreeType {
     OAK,

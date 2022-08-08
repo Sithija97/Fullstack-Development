@@ -1,4 +1,4 @@
-package com.company;
+package com.intro;
 
 public class Tree {
     double heightFt;
