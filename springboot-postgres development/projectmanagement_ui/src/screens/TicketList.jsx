@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Ticket from "./ticket";
 import TicketService from "../services/TicketService";
+import AddModal from "../components/addTicketsModal";
 
 const TicketList = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const loadAllTickets = () => {
     setLoading(true);
@@ -25,7 +27,7 @@ const TicketList = () => {
     <div className="container mx-auto my-8">
       <div className="px-10">
         <div className="h-12">
-          <button className="rounded bg-blue-500 text-white px-6 py-2 font-semibold">
+          <button className="rounded bg-blue-500 text-white px-6 py-2 font-semibold" onClick={() => setOpen(true)}>
             Add Ticket
           </button>
         </div>
@@ -60,6 +62,7 @@ const TicketList = () => {
           </table>
         </div>
       </div>
+      <AddModal open={open} setOpen={setOpen} />
     </div>
   );
 };

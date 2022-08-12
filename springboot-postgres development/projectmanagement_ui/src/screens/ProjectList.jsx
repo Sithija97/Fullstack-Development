@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AddModal from "../components/addModal";
+import AddModal from "../components/addProjectModal";
 // import { Link } from "react-router-dom";
 import ProjectService from "../services/ProjectService";
 import Project from "./project";
@@ -30,9 +30,7 @@ const ProjectList = () => {
       <div className="px-10">
         <div className="h-12">
           <button
-            className="rounded bg-blue-600 text-white px-6 py-2 font-semibold"
-            onClick={() => setOpen(true)}
-          >
+            className="rounded bg-blue-600 text-white px-6 py-2 font-semibold" onClick={() => setOpen(true)}>
             Add Project
           </button>
         </div>
