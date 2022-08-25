@@ -1,17 +1,38 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { DocumentAddIcon } from "@heroicons/react/outline";
+import ProjectService from "../services/ProjectService";
+import TicketService from "../services/TicketService";
 
 export default function AddModal({ open, setOpen }) {
   const initialState = {
     name: "",
     description: "",
     type: "",
-    project: ""
+    project: null
   };
 
   const cancelButtonRef = useRef(null);
+  const [projects, setProjects] = useState([]);
   const [ticket, setTicket] = useState(initialState);
+  const [loading, setLoading] = useState(true);
+
+  const loadAllProjects = () => {
+    setLoading(true);
+    try {
+      ProjectService.getAllProjects()
+        .then((data) => setProjects(data))
+        .catch((e) => console.log("Error: ", e));
+    } catch (error) {
+      console.log("error :", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadAllProjects();
+  }, [projects]);
+  
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -21,9 +42,9 @@ export default function AddModal({ open, setOpen }) {
 
   const handleAddTicket = () => {
     // e.preventDefault();
-    // console.log('project :',project);
-    // ProjectService.addProject(project);
-    ticket(initialState);
+    console.log('ticket :',ticket);
+    TicketService.addTicket(ticket);
+    setTicket(initialState);
     setOpen(false);
   };
 
@@ -83,8 +104,22 @@ export default function AddModal({ open, setOpen }) {
                   </div>
                 </div>
                 <div className="px-10">
-                  <input type="text" placeholder="name" name="name" value={ticket.name} onChange={handleChange}/>
-                  <input type="text" placeholder="description" name="description" value={ticket.description} onChange={handleChange}/>
+                  <input type="text" placeholder="name" name="name" value={ticket.name} onChange={handleChange} />
+                  <input type="text" placeholder="description" name="description" value={ticket.description} onChange={handleChange} />
+                  <select name="type" id="type-select" className="text-gray-400 w-40" onChange={handleChange}>
+                    <option value="">choose a type</option>
+                    <option value="epic">Epic</option>
+                    <option value="story">Story</option>
+                    <option value="task">Task</option>
+                    <option value="sub-task">Sub task</option>
+                  </select>
+                  <select name="project" id="project-select" className="text-gray-400 w-40" onChange={handleChange}>
+                    <option value="">choose the project</option>
+                    {!loading && (projects.map(project => (
+                      <option value={project.id}>{project.name}</option>
+                    )))
+                    }
+                  </select>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button

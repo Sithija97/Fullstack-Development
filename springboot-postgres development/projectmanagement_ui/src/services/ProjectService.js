@@ -3,6 +3,7 @@ const baseUrl = "http://localhost:8080/api";
 
 const getAllProjects = async () => {
   const response = await axios.get(`${baseUrl}/projects`);
+  console.log('response.data :',response.data);
   return response.data;
 };
 

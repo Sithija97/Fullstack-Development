@@ -6,24 +6,8 @@ import Project from "./project";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const loadAllProjects = () => {
-    setLoading(true);
-    try {
-      ProjectService.getAllProjects()
-        .then((data) => setProjects(data))
-        .catch((e) => console.log("Error: ", e));
-    } catch (error) {
-      console.log("error :", error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    loadAllProjects();
-  }, [projects]);
 
   return (
     <div className="container mx-auto my-8">
@@ -52,6 +36,7 @@ const ProjectList = () => {
                 </th>
               </tr>
             </thead>
+            {loading && (<h5>loading...</h5>)}
             {!loading && (
               projects.map((project) => (
                 <tbody className="bg-white" key={project.id}>

@@ -8,21 +8,7 @@ const TicketList = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
-  const loadAllTickets = () => {
-    setLoading(true);
-    try {
-      TicketService.getAllTickets()
-        .then((data) => setTickets(data))
-        .catch((e) => console.log("Error: ", e));
-    } catch (error) {
-      console.log("error :", error);
-    }
-    setLoading(false);
-  };
 
-  useEffect(() => {
-    loadAllTickets();
-  }, []);
   return (
     <div className="container mx-auto my-8">
       <div className="px-10">
@@ -62,7 +48,7 @@ const TicketList = () => {
           </table>
         </div>
       </div>
-      <AddModal open={open} setOpen={setOpen} />
+      {/* <AddModal open={open} setOpen={setOpen} loadAllTickets={loadAllTickets} /> */}
     </div>
   );
 };
