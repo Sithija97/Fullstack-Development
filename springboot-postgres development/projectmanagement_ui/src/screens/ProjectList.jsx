@@ -9,16 +9,21 @@ const ProjectList = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const loadProjects = async () => {
-    let project_data = []
-    setLoading(true)
-    await ProjectService.getAllProjects().then(data => project_data = data).catch(err => console.log('Error :', err));
-    await setProjects(project_data)
-    setLoading(false)
-  }
+  const loadProjects = () => {
+    setLoading(true);
+    try {
+      ProjectService.getAllProjects()
+        .then((data) => setProjects(data))
+        .catch((e) => console.log("Error: ", e));
+    } catch (error) {
+      console.log("error :", error);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     loadProjects();
-  }, [])
+  }, [projects]);
 
 
   return (
