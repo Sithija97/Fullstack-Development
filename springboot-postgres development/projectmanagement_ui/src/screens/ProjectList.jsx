@@ -9,6 +9,18 @@ const ProjectList = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const loadProjects = async () => {
+    let project_data = []
+    setLoading(true)
+    await ProjectService.getAllProjects().then(data => project_data = data).catch(err => console.log('Error :', err));
+    await setProjects(project_data)
+    setLoading(false)
+  }
+  useEffect(() => {
+    loadProjects();
+  }, [])
+
+
   return (
     <div className="container mx-auto my-8">
       <div className="px-10">
