@@ -9,7 +9,7 @@ export default function AddModal({ open, setOpen }) {
     name: "",
     description: "",
     type: "",
-    project: null
+    projectId: null
   };
 
   const cancelButtonRef = useRef(null);
@@ -31,7 +31,7 @@ export default function AddModal({ open, setOpen }) {
 
   useEffect(() => {
     loadAllProjects();
-  }, [projects]);
+  }, []);
   
 
   const handleChange = (e) => {
@@ -113,7 +113,7 @@ export default function AddModal({ open, setOpen }) {
                     <option value="task">Task</option>
                     <option value="sub-task">Sub task</option>
                   </select>
-                  <select name="project" id="project-select" className="text-gray-400 w-40" onChange={handleChange}>
+                  <select name="projectId" id="project-select" className="text-gray-400 w-40" value={ticket.projectId} onChange={handleChange}>
                     <option value="">choose the project</option>
                     {!loading && (projects.map(project => (
                       <option value={project.id}>{project.name}</option>

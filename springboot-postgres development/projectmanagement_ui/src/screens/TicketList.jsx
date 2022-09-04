@@ -22,7 +22,7 @@ const TicketList = () => {
 
   useEffect(() => {
     loadTickets();
-  }, [tickets])
+  }, [])
 
   return (
     <div className="container mx-auto my-8">

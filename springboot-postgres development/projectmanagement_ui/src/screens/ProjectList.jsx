@@ -23,7 +23,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     loadProjects();
-  }, [projects]);
+  }, []);
 
 
   return (
